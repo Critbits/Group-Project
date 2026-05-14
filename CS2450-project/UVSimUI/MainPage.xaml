@@ -1,0 +1,534 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UVSimUI.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="using:UVSimUI"
+    BackgroundColor="{DynamicResource PrimaryColor}">
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="110" />
+                <RowDefinition Height="110" />
+                <RowDefinition Height="160" />
+                <RowDefinition Height="160" />
+                <RowDefinition Height="170" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="550" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Definitions for UVU Logo and Directions Label  -->
+            <StackLayout
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Padding="5"
+                HorizontalOptions="Center">
+                <Image
+                    HeightRequest="220"
+                    Source="uvu_logo.jpg"
+                    WidthRequest="220" />
+            </StackLayout>
+
+            <ScrollView
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="1"
+                HeightRequest="220"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                WidthRequest="290">
+                <Label
+                    x:Name="DirectionsLabel"
+                    Margin="5"
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    FontSize="18"
+                    HorizontalTextAlignment="Start"
+                    Text=""
+                    TextColor="{DynamicResource PrimaryColor}"
+                    VerticalTextAlignment="Center" />
+            </ScrollView>
+
+            <!--  Definitions for Console and Memory Labels  -->
+            <Label
+                x:Name="ConsoleLabel"
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="5"
+                BackgroundColor="Black"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Console: No Input Needed"
+                VerticalOptions="Start"
+                VerticalTextAlignment="Center"
+                WidthRequest="200" />
+
+            <Label
+                x:Name="MemoryLabel"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="3"
+                Margin="10"
+                BackgroundColor="{DynamicResource SecondaryColor}"
+                FontAttributes="Italic"
+                FontSize="40"
+                HeightRequest="130"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="MEMORY"
+                TextColor="{DynamicResource PrimaryColor}"
+                VerticalOptions="Start"
+                VerticalTextAlignment="Center"
+                WidthRequest="455" />
+
+            <!--  Definitions for New Tab, Load From File, & Load to Memory buttons  -->
+            <VerticalStackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.RowSpan="2"
+                HorizontalOptions="End"
+                Spacing="10"
+                VerticalOptions="Center">
+
+                <Button
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    Text="New Tab"
+                    Clicked="NewTabClicked"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    WidthRequest="115">
+                </Button>
+
+                <Button
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    Clicked="LoadFromFileClicked"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    Text="Load From File"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    WidthRequest="176" />
+
+                <Button
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    Clicked="LoadToMemoryClicked"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    Text="Load To Memory"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    WidthRequest="195" />
+
+            </VerticalStackLayout>
+
+            <!--  Definition for Console Entry  -->
+            <Entry
+                x:Name="ConsoleEntry"
+                Grid.Row="1"
+                Grid.Column="2"
+                BackgroundColor="Black"
+                Completed="InputCompleted"
+                HeightRequest="100"
+                HorizontalOptions="Center"
+                Placeholder="Console Inputs Here"
+                TextColor="White"
+                VerticalOptions="End"
+                VerticalTextAlignment="Start"
+                WidthRequest="200" />
+
+            <!--  Definitions for Save button, Accumulator and Counter Display  -->
+            <HorizontalStackLayout
+                Grid.Row="1"
+                Grid.Column="3"
+                HorizontalOptions="Center"
+                Spacing="10"
+                VerticalOptions="End">
+
+                <Button
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    Clicked="SaveClicked"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    Text="Save"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    WidthRequest="100" />
+
+                <Label
+                    x:Name="AccumulatorDisplay"
+                    Padding="15"
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    Text="Accumulator = 0"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    WidthRequest="230" />
+
+                <Label
+                    x:Name="CounterDisplay"
+                    BackgroundColor="{DynamicResource SecondaryColor}"
+                    FontFamily="Tahoma"
+                    FontSize="Medium"
+                    HeightRequest="60"
+                    HorizontalTextAlignment="Center"
+                    Text="Counter = 0"
+                    TextColor="{DynamicResource PrimaryColor}"
+                    VerticalTextAlignment="Center"
+                    WidthRequest="150" />
+
+            </HorizontalStackLayout>
+
+            <!--
+                Definition for instruction editor controls (Copy, Cut,
+                , Clear)
+            -->
+            <Grid
+                Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Padding="5">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="65" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="120" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Input Labels  -->
+                <HorizontalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    Spacing="15">
+
+                    <Label
+                        x:Name="Copy_Start_Label"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        FontAttributes="Italic"
+                        FontFamily="Tahoma"
+                        FontSize="Small"
+                        HeightRequest="30"
+                        Text="Copy Start"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+                    <Label
+                        x:Name="Copy_End_Label"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        FontAttributes="Italic"
+                        FontFamily="Tahoma"
+                        FontSize="Small"
+                        HeightRequest="30"
+                        Text="Copy End"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+
+                </HorizontalStackLayout>
+
+                <!--  Copy Inputs  -->
+                <HorizontalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    Spacing="15">
+
+                    <Entry
+                        x:Name="Copy_Start"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Placeholder="0-249"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+                    <Entry
+                        x:Name="Copy_End"
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Placeholder="0-249"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+
+                </HorizontalStackLayout>
+
+                <!--  Copy and Cut  -->
+                <HorizontalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    Spacing="15">
+
+                    <Button
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        Clicked="CopyClicked"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Text="Copy"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+                    <Button
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        Clicked="CutClicked"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Text="Cut"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+                </HorizontalStackLayout>
+
+                <!--  Paste  -->
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    Spacing="15">
+
+                    <Button
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        Clicked="PasteClicked"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Text="Paste"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            x:Name="Paste_Start_Label"
+                            BackgroundColor="{DynamicResource SecondaryColor}"
+                            FontAttributes="Italic"
+                            FontFamily="Tahoma"
+                            FontSize="Small"
+                            HeightRequest="30"
+                            Text="Paste Start"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            WidthRequest="120" />
+
+                        <Entry
+                            x:Name="Paste_Start"
+                            BackgroundColor="{DynamicResource SecondaryColor}"
+                            FontFamily="Tahoma"
+                            FontSize="Medium"
+                            HeightRequest="60"
+                            Placeholder="0-249"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            WidthRequest="120" />
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
+
+                <!--  Clear  -->
+                <HorizontalStackLayout
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Padding="5"
+                    HorizontalOptions="Start"
+                    Spacing="15">
+
+                    <Button
+                        BackgroundColor="{DynamicResource SecondaryColor}"
+                        Clicked="ClearClicked"
+                        FontFamily="Tahoma"
+                        FontSize="Medium"
+                        HeightRequest="60"
+                        Text="Clear"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        WidthRequest="120" />
+
+
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!--  Definition for CodeEditor  -->
+            <ListView
+                x:Name="InstructionEditor"
+                Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Footer="Maximum Lines Reached"
+                Header="Instruction Editor:"
+                HeightRequest="400"
+                HorizontalOptions="Center"
+                ItemsSource="{Binding PendingInstructions}"
+                VerticalOptions="Center"
+                WidthRequest="470">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="70" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Line}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    Text="Instruction:"
+                                    VerticalOptions="Center" />
+                                <Entry
+                                    Grid.Column="2"
+                                    FontAttributes="Italic"
+                                    Text="{Binding Instruction}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="3"
+                                    FontAttributes="Bold"
+                                    Text="Valid ="
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="4"
+                                    FontAttributes="Italic"
+                                    Text="{Binding Valid}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="5"
+                                    FontAttributes="Bold"
+                                    Text="Loaded ="
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="6"
+                                    FontAttributes="Italic"
+                                    Text="{Binding Loaded}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <!--  ExecuteAll  -->
+            <Button
+                x:Name="ExecuteAllButton"
+                Grid.Row="2"
+                Grid.Column="2"
+                BackgroundColor="{DynamicResource SecondaryColor}"
+                Clicked="ExecuteAllClicked"
+                FontFamily="Tahoma"
+                FontSize="Medium"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                Text="Execute All"
+                TextColor="{DynamicResource PrimaryColor}"
+                VerticalOptions="Center"
+                WidthRequest="170" />
+
+            <!--  MemoryDisplay  -->
+            <ListView
+                x:Name="MemoryDisplay"
+                Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="3"
+                Footer="End Memory"
+                Header="Virtual Machine Memory:"
+                HeightRequest="400"
+                ItemsSource="{Binding VM.Memory.Locations}"
+                SeparatorColor="{DynamicResource PrimaryColor}"
+                SeparatorVisibility="Default"
+                VerticalOptions="Center">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    FontAttributes="Bold"
+                                    Text="Location" />
+                                <Label
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Index}" />
+                                <Label Grid.Column="2" Text="Data = " />
+                                <Label Grid.Column="3" Text="{Binding Data}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--  Definition for Execute Next button  -->
+            <Button
+                x:Name="ExecuteNextButton"
+                Grid.Row="3"
+                Grid.Column="2"
+                BackgroundColor="{DynamicResource SecondaryColor}"
+                Clicked="ExecuteNextClicked"
+                FontFamily="Tahoma"
+                FontSize="Medium"
+                HeightRequest="60"
+                Text="Execute Next"
+                TextColor="{DynamicResource PrimaryColor}"
+                WidthRequest="170" />
+
+            <!--  Definition for Reset Memory button  -->
+            <Button
+                Grid.Row="4"
+                Grid.Column="2"
+                BackgroundColor="{DynamicResource SecondaryColor}"
+                Clicked="ResetMemoryClicked"
+                FontFamily="Tahoma"
+                FontSize="Medium"
+                HeightRequest="60"
+                HorizontalOptions="Center"
+                Text="Reset Memory"
+                TextColor="{DynamicResource PrimaryColor}"
+                VerticalOptions="Center"
+                WidthRequest="170" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

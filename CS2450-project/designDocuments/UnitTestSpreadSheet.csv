@@ -1,0 +1,33 @@
+Test Name,Description,Use Case,Input,Output,Pass Condition
+TestLoadProgram,Loads a program from a file,Verify file content is read correctly,"File with contents: +010007\n+020008\n+030009\n",Program string,Output matches file content
+TestLoadProgramException,Attempts to load a non-existent file,Check exception handling,Nonexistent file path,Exception,Exception is thrown
+TestSaveProgram,Saves a program to a file,Ensure program is saved in correct format,List of instructions,File contents,Saved file content matches expected
+TestSaveProgramException,Attempts to save a program to a restricted location,Check exception handling,File path with no write permission,Exception,Exception is thrown
+TestInstructionType,Determines type of instruction,Check if instruction is categorized correctly,+010000,InstructionType.READ,Type is READ
+TestInstructionValue,Parses instruction value,Verify value parsing,-1000,InstructionType.VALUE,Type is VALUE
+TestInstructionValueCalculation,Calculates value from instruction,Ensure correct value is extracted,-1000,-1000,Value is -1000
+TestInvalidInstructionType,Handles invalid instruction type,Test fallback for invalid types,+9999,InstructionType.VALUE,Type is VALUE
+TestMemoryInitialization,Initializes memory with default values,Verify memory is correctly initialized,Memory of size 100,"Length=100, Span[0]=0",Initialization is correct
+TestMemoryReadWrite,Reads and writes to memory,Ensure memory read/write works,"Write 1234 to address 10",Memory[10]=1234,Value written and read correctly
+TestMemoryOutOfBoundsRead,Reads memory out of bounds,Check exception on invalid access,Read from index 200,IndexOutOfRangeException,Exception is thrown
+TestMemoryOutOfBoundsWrite,Writes to memory out of bounds,Check exception on invalid access,Write to index 200,IndexOutOfRangeException,Exception is thrown
+TestAddPositiveValues,Adds positive numbers to accumulator,Validate addition operation,"+030001 +000005 +043000",Accumulator = 5,Accumulator equals 5
+TestAddNegativeValue,Adds negative number to accumulator,Ensure subtraction works via addition of negative,"Accumulator = 100, Memory[10] = -50",Accumulator = 50,Result is 50
+TestBranchSetsProgramCounter,Sets program counter via BRANCH,Verify jump operation,Memory[0] = 40010,ProgramCounter = 10,Jump successful
+TestBranchSkipsInstructions,BRANCH skips next instruction,Ensure control flow skips,"BRANCH to 20 at address 0, filler at 1",ProgramCounter != 1,Skip occurred
+TestBranchNegJumpsIfNegative,BRANCHNEG if accumulator < 0,Conditional branch test,"Accumulator = -1, BRANCHNEG 30",ProgramCounter = 30,Branch taken
+TestBranchZeroJumpsIfZero,BRANCHZERO if accumulator == 0,Conditional branch test,"Accumulator = 0, BRANCHZERO 25",ProgramCounter = 25,Branch taken
+TestStoreInstruction,Stores value from accumulator to memory,Verify store operation,"Accumulator = 1234, STORE 40",Memory[40] = 1234,Store successful
+TestStoreOverwritesPreviousValue,Overwrites existing memory value,Check if old value is replaced,"Memory[10] = 1111, Accumulator = 5678",Memory[10] = 5678,Overwrite successful
+TestParseFile,Parses instructions from file,Ensure parsing file works,File with three instructions,List of 3 instructions,Correct count and types
+TestParseString,Parses instructions from string,Ensure parsing string works,Instruction string,List of 3 instructions,Correct count and types
+TestInvalidInstruction,Handles invalid instruction string,Check error handling,+abcd,Empty instruction list,No valid instructions parsed
+TestLoadInstructionsIntoMemory,Loads instructions into memory,Ensure memory loading works,3 instructions,Memory[0-2] match,Instructions loaded correctly
+TestRunSingleInstruction_Read,Runs READ instruction,Ensure input is read into memory,Input: 5000,Memory[0] = 5000,Input stored in memory
+TestRunSingleInstruction_Write,Runs WRITE instruction,Ensure memory is output,Memory[10] = 1234,Output: 1234,Output correct
+TestRunSingleInstruction_Add,Runs ADD instruction,Ensure addition is performed,"Accumulator = 10, Memory[10] = 5",Accumulator = 15,Addition successful
+TestRunSingleInstruction_Branch,Runs BRANCH instruction,Verify branching,Memory[0] = 40005,ProgramCounter = 5,Branch taken
+TestRunFromMemory,Runs multiple instructions from memory,Check full execution,"LOAD 5, ADD 6, HALT",Accumulator = 15,Correct result after execution
+TestExecutesAll,Runs multiple instructions to completion,Ensure all steps execute,"LOAD, ADD, STORE, HALT",Memory[12] = 15,Final result is correct
+
+30 Total Tests for the 15 Use Cases

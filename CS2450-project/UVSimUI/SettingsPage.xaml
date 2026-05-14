@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="UVSimUI.SettingsPage"
+    Title="SettingsPage"
+    BackgroundColor="LightGray">
+    <StackLayout Padding="20">
+    <!-- Label to instruct user for primary color -->
+    <Label Text="Enter Primary Color:"
+            FontSize="18"
+            HorizontalOptions="Center"
+           TextColor="Black"/>
+
+    <!-- Entry to take primary color input -->
+    <Entry x:Name="PrimaryColorEntry"
+            Placeholder="#4C721D"
+            FontSize="18"
+            TextChanged="OnPrimaryColorTextChanged"
+           TextColor="Black"/>
+
+    <!-- Display the primary color in a box -->
+    <BoxView x:Name="PrimaryColorBox"
+            HeightRequest="50"
+            WidthRequest="50"
+            BackgroundColor="Transparent"/>
+
+    <!-- Label to instruct user for secondary color -->
+    <Label Text="Enter Secondary Color:"
+            FontSize="18"
+            HorizontalOptions="Center" 
+           TextColor="Black"/>
+
+    <!-- Entry to take secondary color input -->
+    <Entry x:Name="SecondaryColorEntry"
+            Placeholder="#ffffff"
+            FontSize="18"
+            TextChanged="OnSecondaryColorTextChanged" 
+           TextColor="Black"/>
+
+    <!-- Display the secondary color in a box -->
+    <BoxView x:Name="SecondaryColorBox"
+            HeightRequest="50"
+            WidthRequest="50"
+            BackgroundColor="Transparent" />
+
+    <!-- Button to submit the changes -->
+    <Button Text="Submit Changes"
+            FontSize="18"
+            TextColor="{DynamicResource SecondaryColor}"
+            BackgroundColor="{DynamicResource PrimaryColor}"
+            Clicked="OnSubmitClicked" />
+    </StackLayout>
+</ContentPage>
